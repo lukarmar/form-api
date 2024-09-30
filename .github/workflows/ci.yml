@@ -1,0 +1,31 @@
+name: Runner CI
+
+on: [push, pull_request]
+
+jobs:
+
+  runner-ci:
+    name: Runner CI
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          runs-on: ubuntu-latest
+          cache: 'npm'
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Run linters
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Verify build
+        run: npm run build

@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    platform: linux/x86_64
+    image: mysql:5.6
+    restart: always
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - $MYSQLDB_PORT:3306
+    volumes:
+      - ./data/:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  api:
+    platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysqldb
+    command: npm run start
+    restart: always
+    env_file: ./.env
+    environment:
+      - MYSQL_HOST=$MYSQLDB_HOST
+      - MYSQL_PORT=$MYSQLDB_PORT
+      - MYSQL_USER=$MYSQLDB_USER
+      - MYSQL_PASSWORD=$MYSQLDB_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+      - MYSQLDB_HOST=$MYSQLDB_HOST
+    ports:
+      - $API_PORT:4568
+    volumes:
+      - ./:/app
+    links:
+      - mysqldb
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+

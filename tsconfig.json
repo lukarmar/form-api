@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "target": "es6",
+    "moduleResolution": "node",
+    "types": ["node", "reflect-metadata"],
+    "outDir": "./dist",
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "baseUrl": "./src/",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@infra/*": ["infra/*"],
+      "@domain/*": ["domain/*"],
+      "@test/*": ["../test/*"],
+    },
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "exclude": ["node_modules"],
+}
